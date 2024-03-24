@@ -12,7 +12,7 @@ const formatDate = (date) => {
 export default function CityItem({ city }) {
   const { cityName, emoji, date, id, position } = city;
 
-  console.log(position);
+  // console.log(position);
 
   return (
     <li>
