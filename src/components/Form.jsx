@@ -2,7 +2,8 @@ import { useReducer } from "react";
 
 import styles from "./Form.module.css";
 import Button from "./Button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import BackButton from "./BackButton";
 
 const formatDate = (date) => {
   return new Intl.DateTimeFormat("en", {
@@ -34,6 +35,7 @@ function reducer(state, action) {
 
 export default function Form() {
   const navigate = useNavigate();
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { cityName, countryName, date, notes } = state;
@@ -75,15 +77,7 @@ export default function Form() {
 
       <div className={styles.buttons}>
         <Button type="primary">Add</Button>
-        <Button
-          type="back"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-        >
-          &larr; Back
-        </Button>
+        <BackButton />
       </div>
     </form>
   );
