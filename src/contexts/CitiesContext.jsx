@@ -17,7 +17,6 @@ function CitiesProvider({ children }) {
         if (!response.ok) throw new Error("400 serries error");
 
         const data = await response.json();
-
         setCities(data);
       } catch (err) {
         alert(`${err.message}`);
@@ -32,9 +31,11 @@ function CitiesProvider({ children }) {
     try {
       setIsLoading(true);
       const response = await fetch(`${BASE_URL}/cities/${id}`);
-      if (!response.ok) throw new Error("400 serries error");
+      if (!response.ok) throw new Error("Client side error ");
 
       const data = await response.json();
+
+      // console.log(data);
 
       setCurrentCity(data);
     } catch (err) {
