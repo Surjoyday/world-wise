@@ -13,20 +13,17 @@ import { useEffect, useState } from "react";
 import { useCitiesContext } from "../contexts/CitiesContext";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 export default function Map() {
   const { cities } = useCitiesContext();
   const [mapPosition, setMapPosition] = useState([26.12, 91.71]);
-  const [searchParams] = useSearchParams();
-
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getMyGeolocation,
   } = useGeolocation(setMapPosition);
-
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
+  const [mapLat, mapLng] = useUrlPosition();
 
   useEffect(
     function () {
@@ -77,7 +74,7 @@ function DetectClick() {
 
   useMapEvent({
     click: (e) => {
-      console.log(e);
+      // console.log(e);
 
       // Data coming from leaflet
       const {
