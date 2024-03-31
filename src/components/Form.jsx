@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 
 import styles from "./Form.module.css";
 import Button from "./Button";
@@ -71,6 +71,7 @@ export default function Form() {
   // Reverse geo-coding (city info from position)
   useEffect(
     function () {
+      if (!lat && !lng) return;
       async function fetchCityData() {
         try {
           dispatch({ type: "loading", payload: true });
@@ -82,7 +83,7 @@ export default function Form() {
 
           const data = await response.json();
 
-          console.log(data);
+          // console.log(data);
           if (!data.countryCode)
             throw new Error(
               "Oops! 🌍 It seems like that location isn't recognized as a valid city. Please try clicking somewhere else."
@@ -97,7 +98,7 @@ export default function Form() {
             },
           });
         } catch (err) {
-          console.log(err.message);
+          // console.log(err.message);
           dispatch({ type: "setError", payload: err.message });
         } finally {
           dispatch({ type: "loading", payload: false });
@@ -107,6 +108,9 @@ export default function Form() {
     },
     [lat, lng]
   );
+
+  if (!lat && !lng)
+    return <Message message="Start by clicking somewhere in the map" />;
 
   if (isLoadingGeocoding) return <Spinner />;
 
