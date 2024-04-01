@@ -60,7 +60,7 @@ function CitiesProvider({ children }) {
         },
       });
 
-      if (!response.ok) throw new Error("Error ADDING New City -- 400");
+      if (!response.ok) throw new Error("Error CREATING City -- 400");
 
       const data = await response.json();
 
@@ -73,9 +73,34 @@ function CitiesProvider({ children }) {
     }
   }
 
+  // DELETE city
+
+  async function deleteCity(id) {
+    try {
+      setIsLoading(true);
+
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+
+      setCities((cities) => cities.filter((city) => city.id !== id));
+    } catch (err) {
+      alert("Error DELETING City");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <CitiesContext.Provider
-      value={{ cities, isLoading, currentCity, fetchCurrentCity, createCity }}
+      value={{
+        cities,
+        isLoading,
+        currentCity,
+        fetchCurrentCity,
+        createCity,
+        deleteCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>
