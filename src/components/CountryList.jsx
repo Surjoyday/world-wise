@@ -14,6 +14,7 @@ export default function CountryList() {
       <Message message="Add your first city by clicking on a city on the map" />
     );
 
+  // Creating a country list from the cities
   const countries = cities.reduce((arr, city) => {
     if (!arr.map((el) => el.country).includes(city.country))
       return [
@@ -26,7 +27,7 @@ export default function CountryList() {
   return (
     <ul className={styles.countryList}>
       {countries.map((country) => (
-        <CountryItem country={country} key={country.country} />
+        <CountryItem country={country} key={country.id} />
       ))}
     </ul>
   );

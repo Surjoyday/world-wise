@@ -8,6 +8,7 @@ function BackButton() {
     <Button
       type="back"
       onClick={(e) => {
+        // because we don't want the BACK BTN to submit the form
         e.preventDefault();
         navigate(-1);
       }}

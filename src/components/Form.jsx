@@ -8,14 +8,18 @@ import { formatDate } from "../utils/formatDateNumeric";
 import { convertToEmoji } from "../utils/convertToEmoji";
 import Message from "./Message";
 import Spinner from "./Spinner";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useCitiesContext } from "../contexts/CitiesContext";
+import { useNavigate } from "react-router-dom";
 
 const BASE_GEOCODING_URL =
   "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
 const initialState = {
   cityName: "",
-  countryName: "",
-  date: formatDate(new Date()),
+  country: "",
+  date: new Date(),
   notes: "",
   isLoadingGeocoding: false,
   emoji: "",
@@ -30,7 +34,7 @@ function reducer(state, action) {
       return {
         ...state,
         cityName: cityData || "",
-        countryName: countryData || "",
+        country: countryData || "",
         emoji: emojiData || "",
       };
 
@@ -55,12 +59,12 @@ function reducer(state, action) {
 
 export default function Form() {
   const [lat, lng] = useUrlPosition();
-
+  const { createCity, isLoading } = useCitiesContext();
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const {
     cityName,
-    countryName,
+    country,
     date,
     notes,
     isLoadingGeocoding,
@@ -109,6 +113,30 @@ export default function Form() {
     [lat, lng]
   );
 
+  async function handleSubmit(e) {
+    // because we don't want hard reload
+    e.preventDefault();
+
+    if (!cityName || !date) return;
+
+    const newCity = {
+      cityName,
+      country,
+      emoji,
+      date,
+      notes,
+      position: { lat, lng },
+    };
+
+    await createCity(newCity);
+
+    navigate("/app/cities");
+  }
+
+  function handleKeyDown(e) {
+    if (e.code === "Enter") handleSubmit(e);
+  }
+
   if (!lat && !lng)
     return <Message message="Start by clicking somewhere in the map" />;
 
@@ -117,7 +145,11 @@ export default function Form() {
   if (geoCodingError) return <Message message={geoCodingError} />;
 
   return (
-    <form className={styles.form}>
+    <form
+      className={`${styles.form} ${isLoading ? styles.loading : ""}`}
+      onSubmit={handleSubmit}
+      onKeyDown={handleKeyDown}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -135,12 +167,12 @@ export default function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName} ?</label>
-        <input
+
+        <DatePicker
           id="date"
-          value={date}
-          onChange={(e) =>
-            dispatch({ type: "dateChanged", payload: e.target.value })
-          }
+          selected={date}
+          dateFormat="dd/MM/yyyy"
+          onChange={(date) => dispatch({ type: "dateChanged", payload: date })}
         />
       </div>
 
