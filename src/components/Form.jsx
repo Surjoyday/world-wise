@@ -4,7 +4,6 @@ import styles from "./Form.module.css";
 import Button from "./Button";
 import BackButton from "./BackButton";
 import { useUrlPosition } from "../hooks/useUrlPosition";
-import { formatDate } from "../utils/formatDateNumeric";
 import { convertToEmoji } from "../utils/convertToEmoji";
 import Message from "./Message";
 import Spinner from "./Spinner";
@@ -53,7 +52,7 @@ function reducer(state, action) {
       return { ...state, geoCodingError: action.payload };
 
     default:
-      throw new Error("Unkown action");
+      throw new Error("Unkown action from Form");
   }
 }
 

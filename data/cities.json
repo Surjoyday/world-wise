@@ -25,15 +25,27 @@
       "id": "17806751"
     },
     {
-      "id": "618e",
-      "cityName": "Boitamari",
-      "country": "India",
-      "emoji": "🇮🇳",
-      "date": "2024-04-01T12:08:16.677Z",
-      "notes": "A nice place to visit",
+      "id": "be00",
+      "cityName": "Kalaktang",
+      "country": "Bhutan",
+      "emoji": "🇧🇹",
+      "date": "2024-04-01T17:21:13.164Z",
+      "notes": "",
       "position": {
-        "lat": "26.23430203240676",
-        "lng": "90.52734375"
+        "lat": "27.039556602163195",
+        "lng": "92.08740234375001"
+      }
+    },
+    {
+      "id": "0140",
+      "cityName": "Bhaluka",
+      "country": "Bangladesh",
+      "emoji": "🇧🇩",
+      "date": "2024-04-01T17:22:26.672Z",
+      "notes": "",
+      "position": {
+        "lat": "24.307053283225915",
+        "lng": "90.37353515625001"
       }
     }
   ]
