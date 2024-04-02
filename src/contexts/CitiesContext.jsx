@@ -37,6 +37,7 @@ function reducer(state, action) {
         ...state,
         isLoading: false,
         cities: [...state.cities, action.payload],
+        currentCity: action.payload,
       };
 
     case "city/deleted":
@@ -44,6 +45,7 @@ function reducer(state, action) {
         ...state,
         isLoading: false,
         cities: state.cities.filter((city) => city.id !== action.payload),
+        currentCity: {},
       };
 
     case "rejected":
@@ -55,13 +57,9 @@ function reducer(state, action) {
 }
 
 function CitiesProvider({ children }) {
-  // const [cities, setCities] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [currentCity, setCurrentCity] = useState({});
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { cities, isLoading, currentCity } = state;
+  const { cities, isLoading, currentCity, error } = state;
 
   // Fetch ALL the cities available
   useEffect(function () {
@@ -81,8 +79,10 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  // Fetch INDIVIDUAL City details --> CityItem
+  // Fetch INDIVIDUAL City details --> City.jsx
   async function fetchCurrentCity(id) {
+    // console.log(id, currentCity.id);
+    if (Number(id) === currentCity.id) return;
     dispatch({ type: "loading" });
     try {
       const response = await fetch(`${BASE_URL}/cities/${id}`);
@@ -140,6 +140,7 @@ function CitiesProvider({ children }) {
         cities,
         isLoading,
         currentCity,
+        error,
         fetchCurrentCity,
         createCity,
         deleteCity,

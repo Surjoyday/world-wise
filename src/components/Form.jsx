@@ -71,7 +71,7 @@ export default function Form() {
     geoCodingError,
   } = state;
 
-  // Reverse geo-coding (city info from position)
+  // Reverse geo-coding (city info from position lat and lng)
   useEffect(
     function () {
       if (!lat && !lng) return;
