@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 
-const BASE_URL = "http://localhost:9000";
+const BASE_URL = "https://github.com/Surjoyday/World-Wise";
 
 const CitiesContext = createContext();
 
