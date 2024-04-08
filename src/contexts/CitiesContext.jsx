@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 
-const BASE_URL = "https://github.com/Surjoyday/World-Wise";
+const BASE_URL = "https://github.com/Surjoyday/world-wise/cities/";
 
 const CitiesContext = createContext();
 
@@ -67,7 +67,7 @@ function CitiesProvider({ children }) {
       dispatch({ type: "loading" });
 
       try {
-        const response = await fetch(`${BASE_URL}/cities`);
+        const response = await fetch(`${BASE_URL}`);
         if (!response.ok) throw new Error("Error loading cities...");
 
         const data = await response.json();
@@ -86,7 +86,7 @@ function CitiesProvider({ children }) {
       if (Number(id) === currentCity.id) return;
       dispatch({ type: "loading" });
       try {
-        const response = await fetch(`${BASE_URL}/cities/${id}`);
+        const response = await fetch(`${BASE_URL}/${id}`);
         if (!response.ok) throw new Error("Error loading city...");
 
         const data = await response.json();
@@ -105,7 +105,7 @@ function CitiesProvider({ children }) {
   async function createCity(newCity) {
     dispatch({ type: "loading" });
     try {
-      const response = await fetch(`${BASE_URL}/cities`, {
+      const response = await fetch(`${BASE_URL}`, {
         method: "POST",
         body: JSON.stringify(newCity),
         headers: {
@@ -127,7 +127,7 @@ function CitiesProvider({ children }) {
   async function deleteCity(id) {
     dispatch({ type: "loading" });
     try {
-      await fetch(`${BASE_URL}/cities/${id}`, {
+      await fetch(`${BASE_URL}/${id}`, {
         method: "DELETE",
       });
 
