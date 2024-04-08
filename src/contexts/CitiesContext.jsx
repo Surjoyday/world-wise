@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 
-const BASE_URL = "https://github.com/Surjoyday/world-wise/cities/";
+const BASE_URL = "http://localhost:9000";
 
 const CitiesContext = createContext();
 
@@ -67,7 +67,7 @@ function CitiesProvider({ children }) {
       dispatch({ type: "loading" });
 
       try {
-        const response = await fetch(`${BASE_URL}`);
+        const response = await fetch(`${BASE_URL}/cities`);
         if (!response.ok) throw new Error("Error loading cities...");
 
         const data = await response.json();
@@ -80,13 +80,13 @@ function CitiesProvider({ children }) {
   }, []);
 
   // Fetch INDIVIDUAL City details --> City.jsx
-
   const fetchCurrentCity = useCallback(
     async function fetchCurrentCity(id) {
+      // console.log(id, currentCity.id);
       if (Number(id) === currentCity.id) return;
       dispatch({ type: "loading" });
       try {
-        const response = await fetch(`${BASE_URL}/${id}`);
+        const response = await fetch(`${BASE_URL}/cities/${id}`);
         if (!response.ok) throw new Error("Error loading city...");
 
         const data = await response.json();
@@ -105,7 +105,7 @@ function CitiesProvider({ children }) {
   async function createCity(newCity) {
     dispatch({ type: "loading" });
     try {
-      const response = await fetch(`${BASE_URL}`, {
+      const response = await fetch(`${BASE_URL}/cities`, {
         method: "POST",
         body: JSON.stringify(newCity),
         headers: {
@@ -127,7 +127,7 @@ function CitiesProvider({ children }) {
   async function deleteCity(id) {
     dispatch({ type: "loading" });
     try {
-      await fetch(`${BASE_URL}/${id}`, {
+      await fetch(`${BASE_URL}/cities/${id}`, {
         method: "DELETE",
       });
 
