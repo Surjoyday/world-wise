@@ -23,7 +23,7 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const Product = lazy(() => import("./pages/Product"));
 const Login = lazy(() => import("./pages/Login"));
 const AppLayout = lazy(() => import("./pages/AppLayout"));
-const PageNoFount = lazy(() => import("./pages/PageNotFound"));
+const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 
 export default function App() {
   return (
@@ -52,7 +52,7 @@ export default function App() {
                 <Route path="form" element={<Form />} />
               </Route>
 
-              <Route path="*" element={<PageNoFount />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Suspense>
         </BrowserRouter>
