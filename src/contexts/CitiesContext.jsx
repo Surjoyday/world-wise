@@ -1,9 +1,9 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
-  useState,
 } from "react";
 
 const BASE_URL = "http://localhost:9000";
@@ -80,23 +80,26 @@ function CitiesProvider({ children }) {
   }, []);
 
   // Fetch INDIVIDUAL City details --> City.jsx
-  async function fetchCurrentCity(id) {
-    // console.log(id, currentCity.id);
-    if (Number(id) === currentCity.id) return;
-    dispatch({ type: "loading" });
-    try {
-      const response = await fetch(`${BASE_URL}/cities/${id}`);
-      if (!response.ok) throw new Error("Error loading city...");
 
-      const data = await response.json();
+  const fetchCurrentCity = useCallback(
+    async function fetchCurrentCity(id) {
+      if (Number(id) === currentCity.id) return;
+      dispatch({ type: "loading" });
+      try {
+        const response = await fetch(`${BASE_URL}/cities/${id}`);
+        if (!response.ok) throw new Error("Error loading city...");
 
-      // console.log(data);
+        const data = await response.json();
 
-      dispatch({ type: "city/loaded", payload: data });
-    } catch (err) {
-      dispatch({ type: "rejected", payload: err.message });
-    }
-  }
+        // console.log(data);
+
+        dispatch({ type: "city/loaded", payload: data });
+      } catch (err) {
+        dispatch({ type: "rejected", payload: err.message });
+      }
+    },
+    [currentCity.id]
+  );
 
   // ADD New City to cities list - POST REQUEST
   async function createCity(newCity) {

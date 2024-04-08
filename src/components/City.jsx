@@ -24,7 +24,7 @@ export default function City() {
     function () {
       fetchCurrentCity(id);
     },
-    [id]
+    [id, fetchCurrentCity]
   );
 
   // console.log(currentCity);
