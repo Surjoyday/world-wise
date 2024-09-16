@@ -20,7 +20,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <img src="img-2.jpg" alt="sunrise in a city" />
+        <img src="/img-2.jpg" alt="sunrise in a city" />
       </section>
     </main>
   );
