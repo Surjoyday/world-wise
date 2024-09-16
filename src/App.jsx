@@ -11,14 +11,13 @@ import City from "./components/City";
 import Form from "./components/Form";
 import SpinnerFullPage from "./components/SpinnerFullPage";
 
-// import HomePage from "./pages/Homepage";
+import HomePage from "./pages/Homepage";
 // import AppLayout from "./pages/AppLayout";
 // import PageNoFount from "./pages/PageNotFound";
 // import Login from "./pages/Login";
 // import Pricing from "./pages/Pricing";
 // import Product from "./pages/Product";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Product = lazy(() => import("./pages/Product"));
 const Login = lazy(() => import("./pages/Login"));
