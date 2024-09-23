@@ -1,21 +1,28 @@
-import { Spinner } from "@common/components";
+import { Spinner, Button } from "@common/components";
 import { useFetch } from "@common/hooks";
 import styles from "./City.module.css";
 
 import { formatDate, BASE_URL } from "@assets/helper";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useCities } from "../../context/CityContext";
 
 function City() {
   const navigate = useNavigate();
+  const { setCurrentCity } = useCities();
+
   const { cityID } = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const lat = searchParams.get("lat");
+  // const lng = searchParams.get("lng");
 
-  const [cityData, isLoading] = useFetch(BASE_URL, `cities/${cityID}`);
+  const [currentCityData, isLoading] = useFetch(
+    BASE_URL,
+    `cities/${cityID}`,
+    setCurrentCity // Passing the setCurrentCity setter function got from the Context to set data also in the state variable called current city
+  );
 
-  const { cityName, date, emoji, notes } = cityData;
+  const { cityName, date, emoji, notes } = currentCityData;
 
   function handleNavigate() {
     navigate(-1);
@@ -55,8 +62,11 @@ function City() {
         </a>
       </div>
 
-      <div>{/* <ButtonBack /> */}</div>
-      <button onClick={handleNavigate}>back</button>
+      <div>
+        <Button onClick={handleNavigate} type="back">
+          &larr; Back
+        </Button>
+      </div>
     </div>
   );
 }

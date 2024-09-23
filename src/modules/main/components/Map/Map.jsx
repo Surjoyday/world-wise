@@ -8,7 +8,7 @@ function Map() {
   const lng = searchParams.get("lng");
 
   function handleNavigate() {
-    navigate("form");
+    navigate(`form`);
   }
 
   return (
