@@ -6,11 +6,11 @@ import { BrowserRouter } from "react-router-dom";
 import { CitiesProvider } from "@maincontext/CityContext";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <CitiesProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </CitiesProvider>
-  </StrictMode>
+  // <StrictMode>
+  <CitiesProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </CitiesProvider>
+  // </StrictMode>
 );

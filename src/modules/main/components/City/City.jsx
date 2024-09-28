@@ -1,28 +1,26 @@
 import { Spinner, Button } from "@common/components";
-import { useFetch } from "@common/hooks";
+
 import styles from "./City.module.css";
 
-import { formatDate, BASE_URL } from "@assets/helper";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { formatDate } from "@common/utils";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCities } from "../../context/CityContext";
+import { useEffect } from "react";
 
 function City() {
   const navigate = useNavigate();
-  const { setCurrentCity } = useCities();
+  const { currentCity, fetchCityDetails, isLoading } = useCities();
 
   const { cityID } = useParams();
 
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const lat = searchParams.get("lat");
-  // const lng = searchParams.get("lng");
-
-  const [currentCityData, isLoading] = useFetch(
-    BASE_URL,
-    `cities/${cityID}`,
-    setCurrentCity // Passing the setCurrentCity setter function got from the Context to set data also in the state variable called current city
+  useEffect(
+    function () {
+      fetchCityDetails(cityID);
+    },
+    [cityID, fetchCityDetails]
   );
 
-  const { cityName, date, emoji, notes } = currentCityData;
+  const { cityName, date, emoji, notes } = currentCity;
 
   function handleNavigate() {
     navigate(-1);

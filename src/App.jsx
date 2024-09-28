@@ -13,8 +13,6 @@ import { Form } from "@details/components";
 function App() {
   // console.log(cities);
 
-  // console.log(cities);
-
   return (
     <>
       <Routes>
