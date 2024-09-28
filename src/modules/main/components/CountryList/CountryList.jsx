@@ -1,7 +1,7 @@
 import { CountryItem } from "@main/components";
 import { Spinner } from "@common/components";
 import { Message } from "@details/components";
-import { useCities } from "@maincontext/CityContext";
+import { useCities } from "@main-context/CityContext";
 import styles from "./CountryList.module.css";
 
 function CountryList() {

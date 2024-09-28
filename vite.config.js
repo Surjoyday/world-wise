@@ -15,7 +15,7 @@ export default defineConfig({
       "@details": path.resolve(__dirname, "./src/modules/details"),
       "@main": path.resolve(__dirname, "./src/modules/main"),
       "@pages": path.resolve(__dirname, "./src/pages"),
-      "@maincontext": path.resolve(__dirname, "./src/modules/main/context"),
+      "@main-context": path.resolve(__dirname, "./src/modules/main/context"),
     },
   },
   plugins: [react()],

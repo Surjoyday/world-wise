@@ -1,4 +1,4 @@
-async function fetchDataFromApi(
+async function makeApiRequest(
   BASE_URL,
   endpoint,
   options = {},
@@ -12,6 +12,13 @@ async function fetchDataFromApi(
     },
   };
 
+  if (
+    ["POST", "PATCH", "PUT", "DELETE"].includes(config.method) &&
+    options.body
+  ) {
+    config.body = JSON.stringify(options.body);
+  }
+
   const url = new URL(`${BASE_URL}`);
 
   if (endpoint) url.pathname += endpoint;
@@ -22,13 +29,14 @@ async function fetchDataFromApi(
 
   try {
     const res = await fetch(url, config);
+    // console.log(res);
     if (!res.ok) throw new Error("Error loading data....");
 
     const data = await res.json();
     return data;
   } catch (error) {
-    throw error.message;
+    throw new Error(error.message);
   }
 }
 
-export { fetchDataFromApi };
+export { makeApiRequest };

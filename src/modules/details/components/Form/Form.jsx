@@ -7,10 +7,11 @@ import { Message } from "@details/components";
 import {
   convertToEmoji,
   BASE_GEOCODING_URL,
-  fetchDataFromApi,
+  makeApiRequest,
 } from "@common/utils";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useCities } from "@main-context/CityContext";
 
 const initialState = {
   cityName: "",
@@ -51,17 +52,18 @@ function Form() {
     { cityName, country, emoji, date, notes, status, errorMessage },
     dispatch,
   ] = useReducer(reducer, initialState);
+  const { createCity, isLoading, errorMsg } = useCities();
   const navigate = useNavigate();
   const [{ lat, lng }] = useUrlPosition(); // CUSTOM HOOK TO GET QUERY STRING DATA FROM THE URL
 
   // REVERSE GEO-CODING
   useEffect(
     function () {
-      if (!lat && !lng) return; // This ensure that if "lat" and "lng" doesn't exits then simply return
+      if (!lat && !lng) return; // This ensure that if "lat" and "lng" doesn't exits then simply return , otherwise reverse-geocoding url gets the current location "lat" and "lng"
       async function fetchCityData() {
         try {
           dispatch({ type: "loading" });
-          const result = await fetchDataFromApi(
+          const result = await makeApiRequest(
             BASE_GEOCODING_URL,
             "",
             {},
@@ -92,7 +94,7 @@ function Form() {
     [lat, lng]
   );
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!cityName || !date) return;
@@ -107,16 +109,23 @@ function Form() {
       id: crypto.randomUUID(),
     };
 
-    console.log(newCityToAdd);
+    await createCity(newCityToAdd);
+    if (!errorMsg) {
+      navigate("/app/cities");
+    }
   }
 
   if (!lat && !lng)
     return <Message message="Start by clicking somewhere on the map" />;
+
   if (status === "loading") return <Spinner />;
-  if (status === "error") return <Message message={errorMessage} />;
+  if (status === "error" || errorMsg) return <Message message={errorMessage} />;
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={`${styles.form} ${isLoading ? styles.loading : ""}`}
+      onSubmit={handleSubmit}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input

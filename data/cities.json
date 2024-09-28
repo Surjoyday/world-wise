@@ -47,6 +47,18 @@
         "lat": "24.487148563173424",
         "lng": "89.84619140625001"
       }
+    },
+    {
+      "id": "3c220d7d-45f3-4239-bb81-ff2e128ccf0a",
+      "cityName": "Careby Aunby and Holywell",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "emoji": "🇬🇧",
+      "date": "2024-09-28T18:34:11.743Z",
+      "notes": "Its a demo",
+      "position": {
+        "lat": "52.736291655910925",
+        "lng": "-0.5273437500000001"
+      }
     }
   ]
 }

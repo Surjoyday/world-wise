@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useCities } from "@maincontext/CityContext";
+import { useCities } from "@main-context/CityContext";
 import styles from "./Map.module.css";
 import {
   MapContainer,
