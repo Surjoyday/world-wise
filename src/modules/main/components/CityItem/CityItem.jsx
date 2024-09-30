@@ -12,9 +12,14 @@ function CityItem({ city }) {
     position: { lat, lng },
   } = city;
 
-  const { currentCity } = useCities();
+  const { currentCity, deleteCity } = useCities();
 
   const isClicked = id === currentCity.id;
+
+  function handleDelete(e) {
+    e.preventDefault();
+    deleteCity(id);
+  }
 
   return (
     <li>
@@ -27,7 +32,9 @@ function CityItem({ city }) {
         <span className={styles.emoji}>{emoji}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>({formatDate(date)})</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button className={styles.deleteBtn} onClick={handleDelete}>
+          &times;
+        </button>
       </Link>
     </li>
   );

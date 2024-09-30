@@ -38,6 +38,13 @@ function reducer(state, action) {
         cities: [...state.cities, action.payload],
       };
 
+    case "city/deleted":
+      return {
+        ...state,
+        isLoading: false,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+      };
+
     default:
       throw new Error("Unknown action in CitiesContext");
   }
@@ -88,8 +95,22 @@ function CitiesProvider({ children }) {
         body: newCity,
       });
 
-      console.log(result);
+      // console.log(result);
       dispatch({ type: "cities/updated", payload: result }); // Using this to sync the UI state with the Remote state
+    } catch (err) {
+      const errorMessage = err.message;
+      console.log(errorMessage);
+      dispatch({ type: "error-msg/updated", payload: errorMessage });
+    }
+  }, []);
+
+  const deleteCity = useCallback(async function (id) {
+    dispatch({ type: "loading" });
+    try {
+      const result = await makeApiRequest(BASE_URL, `/cities/${id}`, {
+        method: "DELETE",
+      });
+      dispatch({ type: "city/deleted", payload: id });
     } catch (err) {
       const errorMessage = err.message;
       console.log(errorMessage);
@@ -106,6 +127,7 @@ function CitiesProvider({ children }) {
         errorMsg,
         fetchCityDetails,
         createCity,
+        deleteCity,
       }}
     >
       {children}

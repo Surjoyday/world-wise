@@ -8,7 +8,7 @@ async function makeApiRequest(
     method: options.method || "GET",
     headers: {
       "Content-Type": "application/json",
-      ...(options.header || {}),
+      ...(options.headers || {}),
     },
   };
 
