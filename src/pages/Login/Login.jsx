@@ -4,21 +4,23 @@ import styles from "./Login.module.css";
 import { useAuth } from "@main/context/FakeAuth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@common/components";
+import { Message } from "@details/components";
 
 export default function Login() {
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, error } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("sagar@example.com");
   const [password, setPassword] = useState("qwerty");
 
   function handleSubmit(e) {
     e.preventDefault();
-    login(email, password);
+
+    if (email && password) login(email, password);
   }
 
   useEffect(
     function () {
-      if (isAuthenticated) navigate("/app");
+      if (isAuthenticated) navigate("/app", { replace: true });
     },
     [isAuthenticated, navigate]
   );
@@ -26,6 +28,7 @@ export default function Login() {
   return (
     <main className={styles.login}>
       <PageNavBar />
+      {error !== "" && <Message message={`❌${error}`} />}
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>

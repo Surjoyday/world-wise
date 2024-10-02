@@ -2,14 +2,6 @@ import { createContext, useContext, useReducer } from "react";
 
 const AuthContext = createContext();
 
-const getRandomLetters = () => {
-  const letters = "abcdefghjiklmnopqrstuvwxyz";
-  const randomLetterOne = letters.at(Math.floor(Math.random * letters.length));
-  const randomLetterTwo = letters.at(Math.floor(Math.random * letters.length));
-
-  return `${randomLetterOne}${randomLetterTwo}`;
-};
-
 const FAKE_USER = {
   email: "sagar@example.com",
   password: "qwerty",
@@ -23,6 +15,7 @@ const initialState = {
     avatar: "https://i.pravatar.cc/100?u=ss",
   },
   isAuthenticated: localStorage.getItem("isAuth") ?? false,
+  error: "",
 };
 
 function reducer(state, action) {
@@ -44,6 +37,9 @@ function reducer(state, action) {
       };
     }
 
+    case "login/error":
+      return { ...initialState, error: action.payload };
+
     case "user/logged-out":
       // return {...initialState, isAuthenticated: false};
       return initialState;
@@ -54,7 +50,7 @@ function reducer(state, action) {
 }
 
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated }, dispatch] = useReducer(
+  const [{ user, isAuthenticated, error }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -67,16 +63,25 @@ function AuthProvider({ children }) {
         "userName",
         `${email.at(0).toUpperCase()}${email.slice(1, email.indexOf("@"))}`
       );
+
+      return;
     }
+
+    dispatch({
+      type: "login/error",
+      payload: "Email or Password is incorrect",
+    });
   }
   function logout() {
-    localStorage.removeItem("isAuth");
-    localStorage.removeItem("isAuth");
     dispatch({ type: "user/logged-out" });
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("userName");
   }
 
   return (
-    <AuthContext.Provider value={{ login, logout, user, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ login, logout, user, isAuthenticated, error }}
+    >
       {children}
     </AuthContext.Provider>
   );

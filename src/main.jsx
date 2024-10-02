@@ -7,13 +7,13 @@ import { CitiesProvider } from "@main/context/CityContext";
 import { AuthProvider } from "@main/context/FakeAuth";
 
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-  <AuthProvider>
-    <CitiesProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </CitiesProvider>
-  </AuthProvider>
-  // </StrictMode>
+  <StrictMode>
+    <AuthProvider>
+      <CitiesProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </CitiesProvider>
+    </AuthProvider>
+  </StrictMode>
 );
