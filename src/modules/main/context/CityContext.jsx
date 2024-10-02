@@ -105,14 +105,15 @@ function CitiesProvider({ children }) {
     }
   }, []);
 
-  const deleteCity = useCallback(async function (id) {
+  const deleteCity = useCallback(async function (cityId) {
     dispatch({ type: "loading" });
     try {
-      const result = await makeApiRequest(BASE_URL, `cities/${id}`, {
+      const result = await makeApiRequest(BASE_URL, `cities/${cityId}`, {
         method: "DELETE",
       });
       console.log(result.id);
-      dispatch({ type: "city/deleted", payload: result.id ?? id });
+      console.log(cityId);
+      dispatch({ type: "city/deleted", payload: result.id ?? cityId });
     } catch (err) {
       const errorMessage = err.message;
       console.log(errorMessage);
