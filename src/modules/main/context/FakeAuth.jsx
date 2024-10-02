@@ -11,10 +11,8 @@ const getRandomLetters = () => {
 };
 
 const FAKE_USER = {
-  name: "Jack",
-  email: "jack@example.com",
+  email: "sagar@example.com",
   password: "qwerty",
-  avatar: "https://i.pravatar.cc/100?u=ss",
 };
 
 const initialState = {
@@ -22,7 +20,7 @@ const initialState = {
     email: "",
     password: "",
     name: localStorage.getItem("userName") ?? "",
-    avatar: FAKE_USER.avatar,
+    avatar: "https://i.pravatar.cc/100?u=ss",
   },
   isAuthenticated: localStorage.getItem("isAuth") ?? false,
 };
