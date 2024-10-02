@@ -1,5 +1,5 @@
 export const BASE_URL =
-  "https://my-json-server.typicode.com/Surjoyday/world-wise";
+  "https://my-json-server.typicode.com/Surjoyday/world-wise/";
 // "http://localhost:9000";
 
 export const BASE_GEOCODING_URL =

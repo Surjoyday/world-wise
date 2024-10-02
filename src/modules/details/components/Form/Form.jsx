@@ -11,7 +11,7 @@ import {
 } from "@common/utils";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useCities } from "@main-context/CityContext";
+import { useCities } from "@main/context/CityContext";
 
 const initialState = {
   cityName: "",

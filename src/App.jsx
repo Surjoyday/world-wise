@@ -6,6 +6,7 @@ import {
   PageNotFound,
   Pricing,
   Product,
+  ProtectedRoute,
 } from "@pages";
 import { CityList, CountryList, City } from "@main/components";
 import { Form } from "@details/components";
@@ -21,7 +22,14 @@ function App() {
         <Route path="product" element={<Product />} />
         <Route path="login" element={<Login />} />
 
-        <Route path="app" element={<AppLayout />}>
+        <Route
+          path="app"
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate replace to="cities" />} />
           {/* "replace" replaces the current URL in the history stack with the new URL instead of adding a new entry */}
           <Route path="cities" element={<CityList />} />

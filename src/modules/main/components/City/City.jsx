@@ -9,15 +9,15 @@ import { useEffect } from "react";
 
 function City() {
   const navigate = useNavigate();
-  const { currentCity, fetchCityDetails, isLoading } = useCities();
+  const { currentCity, getCityDetails, isLoading } = useCities();
 
   const { cityID } = useParams();
 
   useEffect(
     function () {
-      fetchCityDetails(cityID);
+      getCityDetails(cityID);
     },
-    [cityID, fetchCityDetails]
+    [cityID, getCityDetails]
   );
 
   const { cityName, date, emoji, notes } = currentCity;
