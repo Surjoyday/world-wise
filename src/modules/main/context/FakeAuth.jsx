@@ -4,7 +4,7 @@ const AuthContext = createContext();
 
 const FAKE_USER = {
   email: "sagar@example.com",
-  password: "qwerty",
+  password: "P@ssw0rd",
 };
 
 const initialState = {
