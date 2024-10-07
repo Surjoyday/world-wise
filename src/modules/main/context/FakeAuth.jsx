@@ -14,7 +14,7 @@ const initialState = {
     name: localStorage.getItem("userName") ?? "",
     avatar: "https://i.pravatar.cc/100?u=ss",
   },
-  isAuthenticated: localStorage.getItem("isAuth") ?? false,
+  isAuthenticated: JSON.parse(localStorage.getItem("isAuth")) ? true : false,
   error: "",
 };
 
@@ -56,26 +56,24 @@ function AuthProvider({ children }) {
   );
 
   function login(email, password) {
-    if (email === FAKE_USER.email && password === FAKE_USER.password) {
-      dispatch({ type: "user/logged-in", payload: { email, password } });
-      localStorage.setItem("isAuth", JSON.stringify(true));
-      localStorage.setItem(
-        "userName",
-        `${email.at(0).toUpperCase()}${email.slice(1, email.indexOf("@"))}`
-      );
-
+    if (!email === FAKE_USER.email && !password === FAKE_USER.password) {
+      dispatch({
+        type: "login/error",
+        payload: "Email or Password is incorrect",
+      });
       return;
     }
 
-    dispatch({
-      type: "login/error",
-      payload: "Email or Password is incorrect",
-    });
+    dispatch({ type: "user/logged-in", payload: { email, password } });
+    localStorage.setItem("isAuth", JSON.stringify(true));
+    localStorage.setItem(
+      "userName",
+      `${email.at(0).toUpperCase()}${email.slice(1, email.indexOf("@"))}`
+    );
   }
   function logout() {
+    localStorage.clear();
     dispatch({ type: "user/logged-out" });
-    localStorage.removeItem("isAuth");
-    localStorage.removeItem("userName");
   }
 
   return (
