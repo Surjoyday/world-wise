@@ -14,7 +14,7 @@ const initialState = {
     name: localStorage.getItem("userName") ?? "",
     avatar: "https://i.pravatar.cc/100?u=ss",
   },
-  isAuthenticated: JSON.parse(localStorage.getItem("isAuth")) ? true : false,
+  isAuthenticated: JSON.parse(localStorage.getItem("isAuth")) ?? false,
   error: "",
 };
 
